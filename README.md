@@ -7,3 +7,5 @@ Proyecto pequeño para demostrar operaciones de control de versiones.
 ```bash
 python app.py
 python -m unittest -v
+
+La moneda inicial del sistema es USD.
