@@ -1,6 +1,6 @@
 {
   "nombre": "NovaSoft Pedidos",
   "moneda": "USD",
-  "descuento_promocional": false,
+  "descuento_promocional": true,
   "impuesto_porcentaje": 0
 }
