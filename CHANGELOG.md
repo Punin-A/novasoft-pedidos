@@ -1,6 +1,6 @@
 ```markdown
 # Historial de versiones
 
-## En desarrollo
+## En v1.0.0
 
 - Proyecto inicial de gestión de pedidos.
