@@ -1,6 +1,6 @@
 # NovaSoft Pedidos
 
-Aplicación de pedidos con cálculo de totales y pruebas automatizadas.
+Sistema de pedidos de NovaSoft con cálculo de totales y pruebas automatizadas.
 
 ## Ejecución
 
