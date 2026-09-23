@@ -1,6 +1,6 @@
 # NovaSoft Pedidos
 
-Proyecto pequeño para demostrar operaciones de control de versiones.
+Sistema web de pedidos para registrar operaciones de NovaSoft.
 
 ## Ejecución
 
