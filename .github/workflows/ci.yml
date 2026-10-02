@@ -1,0 +1,65 @@
+name: Integración continua
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compilar-probar-reportar:
+    name: Compilar, probar y generar reporte
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v7
+
+      - name: Configurar Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Mostrar versión de Python
+        run: python --version
+
+      - name: Compilar código
+        id: compilacion
+        run: python -m compileall -q app.py pedido.py test_pedido.py
+
+      - name: Ejecutar aplicación
+        id: aplicacion
+        run: python app.py
+
+      - name: Ejecutar pruebas y generar reporte
+        id: pruebas
+        shell: bash
+        run: |
+          mkdir -p reportes
+          set -o pipefail
+          python -m unittest -v 2>&1 | tee reportes/reporte-pruebas.txt
+
+      - name: Crear resumen del pipeline
+        if: always()
+        shell: bash
+        run: |
+          echo "## Reporte de integración continua" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Compilación: ${{ steps.compilacion.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Ejecución de la aplicación: ${{ steps.aplicacion.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Pruebas automatizadas: ${{ steps.pruebas.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Versión de Python: 3.13" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publicar reporte
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-pruebas
+          path: reportes/reporte-pruebas.txt
+          if-no-files-found: warn
+          retention-days: 30
